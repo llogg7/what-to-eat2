@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天吃什么？</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page">
+
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header-title">今天吃什么</h1>
+            <p class="header-desc">做决定的事，交给运气就好。</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-tab="random">随机选</button>
+            <button class="nav-btn" data-tab="manage">管理</button>
+            <button class="nav-btn" data-tab="history">历史</button>
+        </nav>
+
+        <!-- ========== 随机选 ========== -->
+        <main id="tab-random" class="tab-content active">
+
+            <!-- Mode pills -->
+            <div class="mode-bar">
+                <button class="mode-pill active" data-mode="all">全随机</button>
+                <button class="mode-pill" data-mode="location">按地点</button>
+                <button class="mode-pill" data-mode="price">按价格</button>
+                <button class="mode-pill" data-mode="exclude">排除法</button>
+            </div>
+
+            <!-- Context panel — content changes per mode -->
+            <div id="panel-location" class="panel hidden">
+                <label class="panel-label">选择地点</label>
+                <select id="random-location"></select>
+            </div>
+
+            <div id="panel-price" class="panel hidden">
+                <label class="panel-label">价格范围（元）</label>
+                <div class="input-row">
+                    <input type="number" id="price-min" placeholder="最低价" min="0" inputmode="numeric">
+                    <span class="input-sep">&thinsp;/&thinsp;</span>
+                    <input type="number" id="price-max" placeholder="最高价" min="0" inputmode="numeric">
+                </div>
+            </div>
+
+            <div id="panel-exclude" class="panel hidden">
+                <label class="panel-label">不想吃这些？点掉它</label>
+                <div id="exclude-list" class="exclude-list"></div>
+                <button id="clear-exclude" class="link-btn">清空排除</button>
+            </div>
+
+            <!-- Result -->
+            <div id="result" class="result hidden">
+                <div class="result-location" id="result-location-text"></div>
+                <div class="result-food" id="result-food-text"></div>
+                <div class="result-price" id="result-price-text"></div>
+                <button id="spin-again" class="btn-ghost">再来一次</button>
+            </div>
+
+            <!-- Spinner -->
+            <div class="center" id="spin-area">
+                <div id="spinner" class="spinner">
+                    <span id="spinner-text">点击下方按钮开始</span>
+                </div>
+                <button id="spin-btn" class="btn-large">开始随机</button>
+            </div>
+
+        </main>
+
+        <!-- ========== 管理 ========== -->
+        <main id="tab-manage" class="tab-content">
+            <div class="manage-grid">
+
+                <section class="manage-card">
+                    <h2 class="card-title">添加地点</h2>
+                    <form id="add-location-form" class="form-inline">
+                        <input type="text" id="location-name" placeholder="例如：学校食堂" required>
+                        <button type="submit" class="btn-small">添加</button>
+                    </form>
+                    <div id="location-list" class="data-list"></div>
+                </section>
+
+                <section class="manage-card">
+                    <h2 class="card-title">添加食物</h2>
+                    <form id="add-food-form" class="form-stacked">
+                        <select id="food-location" required>
+                            <option value="">选择地点</option>
+                        </select>
+                        <input type="text" id="food-name" placeholder="食物名称" required>
+                        <input type="number" id="food-price" placeholder="价格（元）" min="0" step="0.1" required inputmode="decimal">
+                        <button type="submit" class="btn-small">添加</button>
+                    </form>
+                    <div id="food-list" class="data-list"></div>
+                </section>
+
+                <section class="manage-card">
+                    <h2 class="card-title">数据备份</h2>
+                    <div class="backup-actions">
+                        <button id="export-data" class="btn-ghost">导出 JSON</button>
+                        <button id="import-data" class="btn-ghost">导入 JSON</button>
+                        <input type="file" id="import-file" accept=".json" class="hidden">
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- ========== 历史 ========== -->
+        <main id="tab-history" class="tab-content">
+            <div class="history-top">
+                <h2 class="card-title" style="margin:0">选择记录</h2>
+                <button id="clear-history" class="link-btn danger">清空全部</button>
+            </div>
+            <div id="history-list" class="history-list"></div>
+        </main>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
